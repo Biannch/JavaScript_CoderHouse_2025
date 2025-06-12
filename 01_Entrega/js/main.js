@@ -25,6 +25,8 @@ const base = {
 }
 base.esperanza_vida = parseInt((recursos_total.alimento + recursos_total.agua + recursos_total.medicamentos)/base.supervivientes)
 
+// funciones
+
 function ver_recursos(){
     let index = 1
     console.log("Recursos de la base:")
@@ -42,49 +44,80 @@ function ver_recursos(){
 function recoleccion(){
     for(let recurso in recursos_total){
         if(recurso == "materiales"){
-            console.log("madera: " + recursos_total.materiales[0])
-            console.log("piedra: " + recursos_total.materiales[1])
-            console.log("tela: " + recursos_total.materiales[2])
-            continue
+            let materiales = ["madera", "piedra", "tela"];
+            for(let i = 0; i < materiales.length; i++){
+                let cantidad = parseInt(prompt("¿Cuánto recolectó de " + materiales[i] + "?"));
+                recursos_total.materiales[i] += cantidad;
+            }
+            continue;
         }
-        let cantidad = parseInt(prompt("¿Cuánto recolectó de " + recurso + " ?"))
-        recursos_total[recurso] += cantidad
+        let cantidad = parseInt(prompt("¿Cuánto recolectó de " + recurso +"?"));
+        recursos_total[recurso] += cantidad;
     }
-    ver_recursos()
+    ver_recursos();
 }
 
-function simular_dia(dias=1){
+function simular_dia(dias = 1){
     let peligro = parseInt(Math.random() * ((dias + base.seguridad + 5) - 1) + 1)
 
     if(peligro >= base.seguridad){
-        base.supervivientes-=1
-        alert("Sufrimos un ataque!")
+        base.supervivientes -= 1;
+        alert("¡Sufrimos un ataque!");
+
+        // Se pierden recursos tras el ataque
+        recursos_total.alimento = Math.max(0, recursos_total.alimento - 2);
+        recursos_total.agua = Math.max(0, recursos_total.agua - 1);
+        recursos_total.medicamentos = Math.max(0, recursos_total.medicamentos - 1);
+        recursos_total.materiales[0] = Math.max(0, recursos_total.materiales[0] - 3); // madera
+        recursos_total.materiales[1] = Math.max(0, recursos_total.materiales[1] - 2); // piedra
+        recursos_total.materiales[2] = Math.max(0, recursos_total.materiales[2] - 1); // tela
+        recursos_total.armas = Math.max(0, recursos_total.armas - 1);
+        recursos_total.defensas = Math.max(0, recursos_total.defensas - 1);
+
+        console.log("¡Se han perdido recursos tras el ataque!");
     }
-    recursos_total.alimento
-    recursos_total.agua
-    recursos_total.medicamentos
-    recursos_total.materiales[0]
-    recursos_total.materiales[1]
-    recursos_total.materiales[2]
-    recursos_total.armas
-    recursos_total.defensas
+
+    // Consumo diario por superviviente
+    const consumo = {
+        alimento: 1,
+        agua: 1,
+        medicamentos: 0.2
+    };
+    recursos_total.alimento = Math.max(0, recursos_total.alimento - consumo.alimento * base.supervivientes * dias);
+    recursos_total.agua = Math.max(0, recursos_total.agua - consumo.agua * base.supervivientes * dias);
+    recursos_total.medicamentos = Math.max(0, recursos_total.medicamentos - consumo.medicamentos * base.supervivientes * dias);
+
+    alert("Consumo de " + dias + " día(s) realizado. Recursos actualizados.");
 }
 
-let opcion
-do{
-    opcion = parseInt(prompt("1. Ver recursos\n2. Agregar recolección\n3. Simular días\n4. Evaluar riesgos\n5. Salir"))
-    if(opcion<1 || opcion>5){
-        alert("Ingrese una opción que exista")
+// fin funciones
+
+console.log("Bienvendido a tu base! Hoy es el día 1, actualmente ya posees ciertos recursos. Mucha suerte sobreviviendo!")
+
+let opcion;
+do {
+    if (base.supervivientes <= 0) {
+        alert("¡Todos los supervivientes han muerto! El juego ha terminado.");
+        break;
     }
-}
-while(opcion<1 || opcion>5){
+    opcion = parseInt(prompt("1. Ver recursos\n2. Agregar recolección\n3. Simular días\n4. Salir"));
+    if(opcion < 1 || opcion > 4){
+        alert("Ingrese una opción que exista");
+        continue;
+    }
     if(opcion == 1){
-        ver_recursos()
+        ver_recursos();
     }
     else if(opcion == 2){
-        recoleccion()
+        recoleccion();
     }
     else if(opcion == 3){
-        simular_dia()
+        let dias = parseInt(prompt("¿Cuántos días queres simular?"));
+        simular_dia(dias);
     }
+
+} while(opcion !== 4 && base.supervivientes > 0);
+
+if (base.supervivientes > 0) {
+    alert("Has salido del simulador, hasta la próxima!");
 }
