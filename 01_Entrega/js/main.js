@@ -25,7 +25,9 @@ const base = {
 }
 base.esperanza_vida = parseInt((recursos_total.alimento + recursos_total.agua + recursos_total.medicamentos)/base.supervivientes)
 
-// funciones
+/*
+FUNCIONES
+*/
 
 function ver_recursos(){
     let index = 1
@@ -38,6 +40,22 @@ function ver_recursos(){
             console.log("tela: " + recursos_total.materiales[2])
         }
         index++
+    }
+}
+
+function buscar_recurso(nombre) {
+    if (nombre === "materiales") {
+        return {
+            madera: recursos_total.materiales[0],
+            piedra: recursos_total.materiales[1],
+            tela: recursos_total.materiales[2]
+        };
+    }
+    if (nombre in recursos_total) {
+        return recursos_total[nombre];
+    } else {
+        console.log("No existe ese recurso!");
+        return null;
     }
 }
 
@@ -61,7 +79,7 @@ function simular_dia(dias = 1){
     let peligro = parseInt(Math.random() * ((dias + base.seguridad + 5) - 1) + 1)
 
     if(peligro >= base.seguridad){
-        base.supervivientes -= 1;
+        base.supervivientes -= 2;
         alert("¡Sufrimos un ataque!");
 
         // Se pierden recursos tras el ataque
@@ -88,11 +106,13 @@ function simular_dia(dias = 1){
     recursos_total.medicamentos = Math.max(0, recursos_total.medicamentos - consumo.medicamentos * base.supervivientes * dias);
 
     alert("Consumo de " + dias + " día(s) realizado. Recursos actualizados.");
+    console.log("Supervivientes restantes: " + base.supervivientes);
 }
 
 // fin funciones
 
-console.log("Bienvendido a tu base! Hoy es el día 1, actualmente ya posees ciertos recursos. Mucha suerte sobreviviendo!")
+console.log("Bienvendido a tu base! Hoy es el día 1, actualmente ya posees ciertos recursos. Mucha suerte sobreviviendo!");
+console.log("Supervivientes actuales: " + base.supervivientes);
 
 let opcion;
 do {
@@ -100,8 +120,8 @@ do {
         alert("¡Todos los supervivientes han muerto! El juego ha terminado.");
         break;
     }
-    opcion = parseInt(prompt("1. Ver recursos\n2. Agregar recolección\n3. Simular días\n4. Salir"));
-    if(opcion < 1 || opcion > 4){
+    opcion = parseInt(prompt("1. Ver recursos\n2. Agregar recolección\n3. Simular días\n4. Buscar recurso\n5. Salir"));
+    if(opcion < 1 || opcion > 5){
         alert("Ingrese una opción que exista");
         continue;
     }
@@ -115,8 +135,23 @@ do {
         let dias = parseInt(prompt("¿Cuántos días queres simular?"));
         simular_dia(dias);
     }
+    else if(opcion == 4){
+        let nombre = prompt("¿Qué recurso desea buscar? (alimento, agua, medicamentos, materiales, armas, defensas)");
+        let resultado = buscar_recurso(nombre);
+        if(resultado !== null){
+            if(typeof resultado === "object"){
+                let mensaje = "Materiales:\n";
+                for(let mat in resultado){
+                    mensaje += mat + ": " + resultado[mat] + "\n";
+                }
+                alert(mensaje);
+            } else {
+                alert(nombre + ": " + resultado);
+            }
+        }
+    }
 
-} while(opcion !== 4 && base.supervivientes > 0);
+} while(opcion !== 5 && base.supervivientes > 0);
 
 if (base.supervivientes > 0) {
     alert("Has salido del simulador, hasta la próxima!");
