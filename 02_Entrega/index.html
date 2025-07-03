@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <h1>Simulador de supervivencia</h1>
+
+    <section id="simulador">
+        <h2>Simular días</h2>
+        <input type="number" id="dias-simular" min="1">
+        <button id="btn-simular">Simular</button>
+    </section>
+
+    <section id="mensajes">
+        <h3>Mensajes del simulador</h3>
+        <div id="prints">Bienvendido a tu base! Hoy es el día 1, actualmente ya posees ciertos recursos. Mucha suerte sobreviviendo!</div>
+    </section>
+
+    <section id="info-base">
+        <p>Supervivientes: <span id="supervivientes">0</span></p>
+        <p>Días posibles: <span id="dias-posibles">0</span></p>
+    </section>
+
+    <section id="panel-principal">
+        <div id="recursos" class="panel">
+            <h2>Recursos actuales</h2>
+            <p>Alimento: <span id="idalimento">0</span></p>
+            <p>Agua: <span id="idagua">0</span></p>
+            <p>Medicamentos: <span id="idmedicamentos">0</span></p>
+            <p>Madera: <span id="idmadera">0</span></p>
+            <p>Piedra: <span id="idpiedra">0</span></p>
+            <p>Tela: <span id="idtela">0</span></p>
+            <p>Armas: <span id="idarmas">0</span></p>
+            <p>Defensas: <span id="iddefensas">0</span></p>
+        </div>
+
+        <div id="acciones" class="panel">
+            <h2>Agregar recolección</h2>
+            <form id="form-recoleccion">
+                <label>Alimento: <input type="number" name="alimento" min="0"></label><br>
+                <label>Agua: <input type="number" name="agua" min="0"></label><br>
+                <label>Medicamentos: <input type="number" name="medicamentos" min="0"></label><br>
+                <label>Madera: <input type="number" name="madera" min="0"></label><br>
+                <label>Piedra: <input type="number" name="piedra" min="0"></label><br>
+                <label>Tela: <input type="number" name="tela" min="0"></label><br>
+                <label>Armas: <input type="number" name="armas" min="0"></label><br>
+                <label>Defensas: <input type="number" name="defensas" min="0"></label><br>
+                <button type="submit">Recolectar</button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>
