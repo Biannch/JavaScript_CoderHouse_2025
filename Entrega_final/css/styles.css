@@ -1,0 +1,74 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Contenedor principal centrado */
+.login-container {
+  width: 500px;
+  max-width: 500px;
+  padding: 20px;
+}
+
+/* Estilo de la tarjeta/formulario */
+.login-form {
+  background-color: #ffffff;
+  padding: 30px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #1a7f49; /* Verde estilo Bootstrap */
+}
+
+/* Etiquetas e inputs */
+.login-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 16px;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+/* .login-form input:last-of-type {
+    margin-bottom: 22px;
+} */
+
+/* Botón de login */
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1a7f49;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+  background-color: #146c3c;
+}
+
