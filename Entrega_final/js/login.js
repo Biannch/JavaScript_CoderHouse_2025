@@ -52,7 +52,7 @@ function mostrarSignUp(){
   })
 }
 
-function mostrarLogin(){
+function mostrarLogin() {
   const contenedor = document.getElementById("mainContainer");
 
   contenedor.innerHTML = `
@@ -66,10 +66,31 @@ function mostrarLogin(){
             <label for="pin">PIN</label>
             <input type="password" id="pin" required>
 
+            <div id="loginError" style="color: red; margin-bottom: 20px"></div>
+
             <button type="submit">Ingresar</button>
             </form>
         </div>
   `;
 
-    // mostrarHomeBanking(usuario);
+  const form = document.getElementById("inicioForm");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cuenta = document.getElementById("cuenta").value;
+    const pin = document.getElementById("pin").value;
+    const usuarioGuardado = localStorage.getItem("usuarioActual");
+    const errorDiv = document.getElementById("loginError");
+
+    if (usuarioGuardado) {
+      const usuario = JSON.parse(usuarioGuardado);
+      if (usuario.cuenta === cuenta && usuario.pin === pin) {
+        // mostrarHomeBanking(usuario);
+        location.reload();
+      } else {
+        errorDiv.textContent = "Número de cuenta o PIN incorrectos.";
+      }
+    } else {
+      errorDiv.textContent = "No hay usuarios registrados. Por favor, crea una cuenta.";
+    }
+  });
 }
