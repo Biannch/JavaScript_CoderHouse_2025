@@ -6,19 +6,19 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
+/* body {
   background-color: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-}
+} */
 
 /* Contenedor principal centrado */
-.inicio-container {
-  width: 500px;
-  max-width: 500px;
-  padding: 20px;
+.inicio-container{
+  width: 400px;
+  margin:auto;
+  margin-top: 10ch;
 }
 
 /* Estilo de la tarjeta/formulario */
@@ -32,7 +32,7 @@ body {
 .inicio-form h2 {
   text-align: center;
   margin-bottom: 24px;
-  color: #1a7f49; /* Verde estilo Bootstrap */
+  color: #1a7f49;
 }
 
 /* Etiquetas e inputs */
@@ -70,5 +70,31 @@ body {
 
 .inicio-form button:hover {
   background-color: #146c3c;
+}
+
+.homebanking-presentacion{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1a7f49;
+  color: #fff;
+  padding: 24px 32px 20px 32px;
+  font-size: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 0 0 12px 0;
+}
+.cerrarSesionBtn {
+  background-color: #da3e2d;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.cerrarSesionBtn:hover {
+  background-color: #c0392b;
 }
 
