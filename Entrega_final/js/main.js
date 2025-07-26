@@ -3,8 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (usuarioGuardado) {
     const usuario = JSON.parse(usuarioGuardado);
-    mostrarHomeBanking(usuario)
-    // mostrarLogin();
+    mostrarLogin();
   } else {
     mostrarSignUp();
   }
@@ -38,14 +37,12 @@ function mostrarSignUp(){
     const nombre = document.getElementById("nombre").value;
     const cuenta = document.getElementById("cuenta").value;
     const pin = document.getElementById("pin").value;
-    const saldo = 0;
+    const saldo = 1500;
     const usuario = { nombre, cuenta, pin, saldo};
 
     // Guardar en localStorage como sesión
     localStorage.setItem("usuarioActual", JSON.stringify(usuario));
     location.reload();
-
-    // // Guardar en usuarios.json -----------> pendiente
   })
 }
 
