@@ -7,7 +7,7 @@ export class Movimientos {
   }
 }
 
-export function mostrarHomeBanking(usuario) {
+export function mostrarHomeBanking(usuario){
   const contenedor = document.getElementById("mainContainer");
 
   contenedor.innerHTML = `
@@ -25,6 +25,13 @@ export function mostrarHomeBanking(usuario) {
       </div>
     </section>
 
+    <section id="dolar" class="cotizacion">
+      <div class="cotizacion-container">
+        <div id="dolarOficial" class="cotizacion-card"></div>
+        <div id="dolarBlue" class="cotizacion-card"></div>
+      </div>
+    </section>
+
     <section class="homebanking-acciones">
       <h3>Acciones Disponibles</h3>
       <button id="btnTransferencia">Realizar Transferencia</button>
@@ -35,6 +42,8 @@ export function mostrarHomeBanking(usuario) {
     <div id="accionesForm"></div>
     <div id="historialContainer"></div>
   `;
+
+  actualizarCotizacionDolar();
 
   document.getElementById("cerrarSesionBtn").addEventListener("click", () => location.reload());
   document.getElementById("eliminarCuentaBtn").addEventListener("click", () => {
@@ -134,4 +143,35 @@ function guardarTransaccion(movimiento) {
   const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
   usuario.historial.push(movimiento);
   localStorage.setItem("usuarioActual", JSON.stringify(usuario));
+}
+
+function actualizarCotizacionDolar() {
+  const contenedorOficial = document.getElementById("dolarOficial");
+  const contenedorBlue = document.getElementById("dolarBlue");
+
+  // Fetch Dólar Oficial
+  fetch('https://dolarapi.com/v1/dolares/oficial')
+    .then(res => {
+      if (!res.ok) throw new Error("Error al consultar el dólar oficial");
+      return res.json();
+    })
+    .then(data => {
+      contenedorOficial.innerText = `💰 Dólar Oficial: $${data.venta}`;
+    })
+    .catch(error => {
+      contenedorOficial.innerText = "No se pudo obtener el dólar oficial.";
+    });
+
+  // Fetch Dólar Blue
+  fetch('https://dolarapi.com/v1/dolares/blue')
+    .then(res => {
+      if (!res.ok) throw new Error("Error al consultar el dólar blue");
+      return res.json();
+    })
+    .then(data => {
+      contenedorBlue.innerText = `💵 Dólar Blue: $${data.venta}`;
+    })
+    .catch(error => {
+      contenedorBlue.innerText = "No se pudo obtener el dólar blue.";
+    });
 }

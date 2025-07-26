@@ -147,3 +147,23 @@ button:hover{
   background-color: #146c3c;
 }
 
+.cotizacion-container {
+  display: flex;
+  gap: 40px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cotizacion-card {
+  background-color: #ffffff;
+  color: #2d7c4f;
+  border: 2px solid #2d7c4f;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  min-width: 180px;
+  text-align: center;
+}
