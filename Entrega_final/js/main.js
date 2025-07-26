@@ -2,12 +2,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const usuarioGuardado = localStorage.getItem("usuarioActual");
 
   if (usuarioGuardado) {
-    const usuario = JSON.parse(usuarioGuardado);
     mostrarLogin();
   } else {
     mostrarSignUp();
   }
 });
+
+class Movimientos{
+  constructor(operacion, monto, cuentaDestino = null){
+    this.fecha = new Date().toLocaleString()
+    this.operacion = operacion
+    this.monto = monto
+    this.cuentaDestino = cuentaDestino
+  }
+  
+}
 
 function mostrarSignUp(){
   const contenedor = document.getElementById("mainContainer");
@@ -37,8 +46,19 @@ function mostrarSignUp(){
     const nombre = document.getElementById("nombre").value;
     const cuenta = document.getElementById("cuenta").value;
     const pin = document.getElementById("pin").value;
+
+    if (pin.length < 4) {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "El PIN debe tener al menos 4 dígitos.",
+      })
+      return; 
+    }
+
     const saldo = 1500;
-    const usuario = { nombre, cuenta, pin, saldo};
+    const historial = [];
+    const usuario = { nombre, cuenta, pin, saldo, historial};
 
     // Guardar en localStorage como sesión
     localStorage.setItem("usuarioActual", JSON.stringify(usuario));
@@ -60,8 +80,6 @@ function mostrarLogin() {
             <label for="pin">PIN</label>
             <input type="password" id="pin" required>
 
-            <div id="loginError" style="color: red; margin-bottom: 20px"></div>
-
             <button type="submit">Ingresar</button>
             </form>
         </div>
@@ -75,20 +93,26 @@ function mostrarLogin() {
     const usuarioGuardado = localStorage.getItem("usuarioActual");
     const errorDiv = document.getElementById("loginError");
 
-    if (usuarioGuardado) {
+    if (usuarioGuardado){
+
       const usuario = JSON.parse(usuarioGuardado);
       if (usuario.cuenta === cuenta && usuario.pin === pin){
         mostrarHomeBanking(usuario);
-      } else {
-        errorDiv.textContent = "Número de cuenta o PIN incorrectos.";
       }
-    } else {
-      errorDiv.textContent = "No hay usuarios registrados. Por favor, crea una cuenta.";
+      else{
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "El PIN debe tener al menos 4 dígitos.",
+        })
+      }
+
     }
+    
   });
 }
 
-function mostrarHomeBanking(usuario) {
+function mostrarHomeBanking(usuario){
   const contenedor = document.getElementById("mainContainer");
 
   // Simulamos un saldo para mostrar
