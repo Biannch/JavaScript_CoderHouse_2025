@@ -1,4 +1,3 @@
-// === homebanking.js ===
 export class Movimientos {
   constructor(operacion, monto, cuentaDestino = null) {
     this.fecha = new Date().toLocaleString();
@@ -92,7 +91,7 @@ function verHistorial() {
     <ul>
       ${usuario.historial.map(t => `
         <li>
-          ${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}: $${t.monto}
+          ${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}
         </li>
       `).join("")}
     </ul>

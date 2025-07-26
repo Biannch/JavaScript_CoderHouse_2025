@@ -6,14 +6,6 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* body {
-  background-color: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-} */
-
 /* Contenedor principal centrado */
 .inicio-container{
   width: 400px;
@@ -76,7 +68,6 @@
   background-color: #2d7c4f;
   color: #fff;
   padding: 24px 32px;
-  border-radius: 0 0 12px 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -130,6 +121,7 @@
   cursor: pointer;
 }
 
+
 #accionesForm, #historialContainer {
   padding: 24px 32px;
   margin-top: 24px;
@@ -151,12 +143,7 @@ button {
   padding: 8px 16px;
   cursor: pointer;
 }
-
-.btn-rojo {
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 4px;
+button:hover{
+  background-color: #146c3c;
 }
-
 
