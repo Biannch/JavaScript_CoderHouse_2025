@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,14 +5,24 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Contenedor principal centrado */
+.logo-banco{
+  width: 100px;
+  margin: 0 auto 20px auto;
+  display: block; 
+  opacity: 0.9;
+}
+
+body{
+  background: url('https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .inicio-container{
   width: 400px;
   margin:auto;
   margin-top: 10ch;
 }
 
-/* Estilo de la tarjeta/formulario */
 .inicio-form {
   background-color: #ffffff;
   padding: 30px 20px;
@@ -27,7 +36,6 @@
   color: #1a7f49;
 }
 
-/* Etiquetas e inputs */
 .inicio-form label {
   display: block;
   margin-bottom: 6px;
@@ -64,7 +72,7 @@
   background-color: #146c3c;
 }
 
-.homebanking-presentacion {
+.homebanking-presentacion{
   background-color: #2d7c4f;
   color: #fff;
   padding: 24px 32px;

@@ -5,6 +5,7 @@ export function mostrarSignUp() {
 
   contenedor.innerHTML = `
     <div class="inicio-container">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" class="logo-banco">
         <form class="inicio-form" id="inicioForm">
         <h2>Crear cuenta</h2>
         <label for="nombre">Nombre de usuario</label>
@@ -43,6 +44,7 @@ export function mostrarLogin() {
 
   contenedor.innerHTML = `
     <div class="inicio-container">
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910766.png" class="logo-banco">
         <form class="inicio-form" id="inicioForm">
         <h2>Inicio de Sesión</h2>
         <label for="cuenta">Número de Cuenta</label>

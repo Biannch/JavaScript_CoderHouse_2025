@@ -9,6 +9,7 @@ export class Movimientos {
 
 export function mostrarHomeBanking(usuario){
   const contenedor = document.getElementById("mainContainer");
+  document.body.style.background = "white"; 
 
   contenedor.innerHTML = `
     <section class="homebanking-presentacion">
