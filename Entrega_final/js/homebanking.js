@@ -62,8 +62,8 @@ function realizarTransferencia(usuario) {
   container.innerHTML = `
     <h3>Realizar Transferencia</h3>
     <form id="formTransferencia">
-      <input type="text" placeholder="Cuenta destino" id="cuentaDestino" required>
-      <input type="number" placeholder="Monto a transferir" id="montoTransferencia" required min="1">
+      <input type="text" placeholder="Cuenta destino" id="cuentaDestino" required value="10200">
+      <input type="number" placeholder="Monto a transferir" id="montoTransferencia" required min="1" value=1000>
       <button type="submit">Transferir</button>
     </form>
   `;
@@ -113,7 +113,7 @@ function depositarDinero(usuario) {
   container.innerHTML = `
     <h3>Depositar Dinero</h3>
     <form id="formDeposito">
-      <input type="number" placeholder="Monto a depositar" id="montoDeposito" required min="1">
+      <input type="number" placeholder="Monto a depositar" id="montoDeposito" required min="1" value=15000>
       <button type="submit">Depositar</button>
     </form>
   `;

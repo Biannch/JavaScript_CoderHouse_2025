@@ -18,11 +18,11 @@ export function mostrarSignUp() {
         <form class="inicio-form" id="inicioForm">
         <h2>Crear cuenta</h2>
         <label for="nombre">Nombre de usuario</label>
-        <input type="text" id="nombre" required>
+        <input type="text" id="nombre" required value="Fernando Gomez">
         <label for="cuenta">Número de Cuenta</label>
-        <input type="text" id="cuenta" required>
+        <input type="text" id="cuenta" required value="00001">
         <label for="pin">PIN</label>
-        <input type="password" id="pin" required>
+        <input type="password" id="pin" required value="1234">
         <button type="submit">Ingresar</button>
         </form>
     </div>
@@ -50,6 +50,7 @@ export function mostrarSignUp() {
 
 export function mostrarLogin() {
   const contenedor = document.getElementById("mainContainer");
+  const usuarioGuardado = JSON.parse(localStorage.getItem("usuarioActual"));
 
   contenedor.innerHTML = `
     <div class="inicio-container">
@@ -57,9 +58,9 @@ export function mostrarLogin() {
         <form class="inicio-form" id="inicioForm">
         <h2>Inicio de Sesión</h2>
         <label for="cuenta">Número de Cuenta</label>
-        <input type="text" id="cuenta" required>
+        <input type="text" id="cuenta" required value="${usuarioGuardado.cuenta}">
         <label for="pin">PIN</label>
-        <input type="password" id="pin" required>
+        <input type="password" id="pin" required value="${usuarioGuardado.pin}">
         <button type="submit">Ingresar</button>
         </form>
     </div>
