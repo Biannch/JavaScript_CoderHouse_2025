@@ -33,9 +33,19 @@ export function mostrarSignUp() {
     const nombre = document.getElementById("nombre").value;
     const cuenta = document.getElementById("cuenta").value;
     const pin = document.getElementById("pin").value;
+    
+    if ((/\d/.test(nombre)) || (nombre.trim() == "")){
+      Swal.fire({ icon: "error", title: "Error!", text: "El nombre no debe contener números o estar vacío" });
+      return;
+    }
 
-    if (pin.length < 4) {
-      Swal.fire({ icon: "error", title: "Error!", text: "El PIN debe tener al menos 4 dígitos." });
+    if ((pin.length < 4) || (pin.trim() == "") || (!/^\d+$/.test(pin))){
+      Swal.fire({ icon: "error", title: "Error!", text: "El PIN debe contener solo números y tener al menos 4 dígitos" });
+      return;
+    }
+    
+    if((cuenta.length < 6) || (cuenta.trim() == "") || (!/^\d+$/.test(cuenta))){
+      Swal.fire({ icon: "error", title: "Error!", text: "La cuenta debe contener solo números y tener al menos 6 dígitos" });
       return;
     }
 

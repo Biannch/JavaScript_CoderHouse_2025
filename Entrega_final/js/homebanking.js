@@ -62,7 +62,10 @@ function realizarTransferencia(usuario) {
   container.innerHTML = `
     <h3>Realizar Transferencia</h3>
     <form id="formTransferencia">
+      <label for="cuentaDestino">Cuenta destino:</label>
       <input type="text" placeholder="Cuenta destino" id="cuentaDestino" required value="10200">
+
+      <label for="montoTransferencia">Monto a transferir:</label>
       <input type="number" placeholder="Monto a transferir" id="montoTransferencia" required min="1" value=1000>
       <button type="submit">Transferir</button>
     </form>
