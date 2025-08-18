@@ -77,7 +77,17 @@ function realizarTransferencia() {
     const cuentaDestino = document.getElementById("cuentaDestino").value.trim();
     const monto = parseFloat(document.getElementById("montoTransferencia").value);
 
-    if (cuentaDestino === usuario.cuenta || monto <= 0 || isNaN(monto) || usuario.saldo < monto) {
+    if(cuentaDestino === usuario.cuenta){
+      Swal.fire({ icon: "error", title: "Error!", text: "No puedes transferirte a vos mismo" });
+      return;
+    }
+    
+    if(usuario.saldo < monto){
+      Swal.fire({ icon: "error", title: "Error!", text: "No tienes fondos suficientes" });
+      return;
+    }
+
+    if(monto <= 0 || isNaN(monto)){
       Swal.fire({ icon: "error", title: "Error!", text: "Verifica los datos ingresados." });
       return;
     }
@@ -88,6 +98,7 @@ function realizarTransferencia() {
     const movimiento = new Movimientos("Transferencia", monto, cuentaDestino);
     guardarTransaccion(movimiento);
     container.innerHTML = `<p>Transferencia realizada exitosamente.</p>`;
+    verHistorial(); 
   });
 }
 
@@ -167,6 +178,7 @@ function depositarDinero() {
     const movimiento = new Movimientos("Deposito", monto);
     guardarTransaccion(movimiento);
     container.innerHTML = `<p>Depósito realizado exitosamente.</p>`;
+    verHistorial();
   });
 }
 
