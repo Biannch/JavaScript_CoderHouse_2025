@@ -64,7 +64,7 @@ function realizarTransferencia() {
     <h3>Realizar Transferencia</h3>
     <form id="formTransferencia">
       <label for="cuentaDestino">Cuenta destino:</label>
-      <input type="text" placeholder="Cuenta destino" id="cuentaDestino" required value="10200">
+      <input type="text" placeholder="Cuenta destino" id="cuentaDestino" required value="102001">
 
       <label for="montoTransferencia">Monto a transferir:</label>
       <input type="number" placeholder="Monto a transferir" id="montoTransferencia" required min="1" value=1000>
@@ -74,7 +74,13 @@ function realizarTransferencia() {
 
   document.getElementById("formTransferencia").addEventListener("submit", function (e) {
     e.preventDefault();
+    
     const cuentaDestino = document.getElementById("cuentaDestino").value.trim();
+
+    if ((cuentaDestino.length < 6) || (!/^\d+$/.test(cuentaDestino))){
+      Swal.fire({ icon: "error", title: "Error!", text: "Ingrese un número de cuenta válido!" });
+      return;
+    }
     const monto = parseFloat(document.getElementById("montoTransferencia").value);
 
     if(cuentaDestino === usuario.cuenta){
