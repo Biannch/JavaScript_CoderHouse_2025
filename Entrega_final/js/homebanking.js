@@ -52,12 +52,13 @@ export function mostrarHomeBanking(usuario){
     location.reload();
   });
 
-  document.getElementById("btnTransferencia").addEventListener("click", () => realizarTransferencia(usuario));
+  document.getElementById("btnTransferencia").addEventListener("click", () => realizarTransferencia());
   document.getElementById("btnHistorial").addEventListener("click", () => verHistorial());
-  document.getElementById("btnDepositar").addEventListener("click", () => depositarDinero(usuario));
+  document.getElementById("btnDepositar").addEventListener("click", () => depositarDinero());
 }
 
-function realizarTransferencia(usuario) {
+function realizarTransferencia() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
   const container = document.getElementById("accionesForm");
   container.innerHTML = `
     <h3>Realizar Transferencia</h3>
@@ -141,29 +142,8 @@ function verHistorial() {
   actualizarLista();
 }
 
-
-// function verHistorial() {
-//   const container = document.getElementById("historialContainer");
-//   const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
-
-//   if (!usuario || !usuario.historial || usuario.historial.length === 0) {
-//     container.innerHTML = `<p>No hay transacciones registradas.</p>`;
-//     return;
-//   }
-
-//   container.innerHTML = `
-//     <h3>Historial de Transacciones</h3>
-//     <ul>
-//       ${usuario.historial.map(t => `
-//         <li>
-//           ${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}
-//         </li>
-//       `).join("")}
-//     </ul>
-//   `;
-// }
-
-function depositarDinero(usuario) {
+function depositarDinero() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
   const container = document.getElementById("accionesForm");
   container.innerHTML = `
     <h3>Depositar Dinero</h3>
