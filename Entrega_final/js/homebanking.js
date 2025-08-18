@@ -177,7 +177,7 @@ function verHistorial(usuario) {
     listaHistorial.innerHTML = "";
     historialFiltrado.forEach(t => {
       const nuevoMovimiento = document.createElement("li");
-      nuevoMovimiento.textContent = `${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `con cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}`;
+      nuevoMovimiento.textContent = `${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `, fuente: cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}`;
       listaHistorial.appendChild(nuevoMovimiento);
     });
   }
