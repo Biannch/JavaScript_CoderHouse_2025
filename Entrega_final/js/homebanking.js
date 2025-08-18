@@ -48,14 +48,18 @@ export function mostrarHomeBanking(usuario){
   actualizarCotizacionDolar();
 
   document.getElementById("cerrarSesionBtn").addEventListener("click", () => location.reload());
+
   document.getElementById("eliminarCuentaBtn").addEventListener("click", () => {
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    usuarios = usuarios.filter(u => u.cuenta !== usuario.cuenta);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
     localStorage.removeItem("usuarioActual");
     location.reload();
   });
 
-  document.getElementById("btnTransferencia").addEventListener("click", () => realizarTransferencia());
-  document.getElementById("btnHistorial").addEventListener("click", () => verHistorial());
-  document.getElementById("btnDepositar").addEventListener("click", () => depositarDinero());
+  document.getElementById("btnTransferencia").addEventListener("click", () => realizarTransferencia(usuario));
+  document.getElementById("btnHistorial").addEventListener("click", () => verHistorial(usuario));
+  document.getElementById("btnDepositar").addEventListener("click", () => depositarDinero(usuario));
 
   document.getElementById("darkModeToggle").addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
@@ -69,8 +73,7 @@ export function mostrarHomeBanking(usuario){
   });
 }
 
-function realizarTransferencia() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
+function realizarTransferencia(usuario) {
   const container = document.getElementById("accionesForm");
   container.innerHTML = `
     <h3>Realizar Transferencia</h3>
@@ -110,19 +113,37 @@ function realizarTransferencia() {
       return;
     }
 
+    // Buscar cuenta destino
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    let destinatario = usuarios.find(u => u.cuenta === cuentaDestino);
+    if (!destinatario) {
+      Swal.fire({ icon: "error", title: "Error!", text: "La cuenta destino no existe." });
+      return;
+    }
+
     usuario.saldo -= monto;
-    actualizarSaldo(usuario);
+    destinatario.saldo += monto;
 
     const movimiento = new Movimientos("Transferencia", monto, cuentaDestino);
-    guardarTransaccion(movimiento);
+    const movimientoDestino = new Movimientos("Depósito recibido", monto, usuario.cuenta);
+
+    usuario.historial.push(movimiento);
+    destinatario.historial.push(movimientoDestino);
+
+    // Actualizar usuarios
+    usuarios = usuarios.map(u => u.cuenta === usuario.cuenta ? usuario : u.cuenta === destinatario.cuenta ? destinatario : u);
+
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuarioActual", JSON.stringify(usuario));
+
+    document.getElementById("saldo").textContent = usuario.saldo;
     container.innerHTML = `<p>Transferencia realizada exitosamente.</p>`;
-    verHistorial(); 
+    verHistorial(usuario);
   });
 }
 
-function verHistorial() {
+function verHistorial(usuario) {
   const container = document.getElementById("historialContainer");
-  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
 
   if (!usuario || !usuario.historial || usuario.historial.length === 0) {
     container.innerHTML = `<p>No hay transacciones registradas.</p>`;
@@ -136,6 +157,7 @@ function verHistorial() {
       <option value="todas">Todas</option>
       <option value="Deposito">Depósitos</option>
       <option value="Transferencia">Transferencias</option>
+      <option value="Depósito recibido">Depósitos recibidos</option>
     </select>
     <ul id="listaHistorial"></ul>
   `;
@@ -154,8 +176,8 @@ function verHistorial() {
 
     listaHistorial.innerHTML = "";
     historialFiltrado.forEach(t => {
-      const nuevoMovimiento = document.createElement('li');
-      nuevoMovimiento.textContent = `${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}`;
+      const nuevoMovimiento = document.createElement("li");
+      nuevoMovimiento.textContent = `${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `con cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}`;
       listaHistorial.appendChild(nuevoMovimiento);
     });
   }
@@ -164,6 +186,9 @@ function verHistorial() {
 
   btnLimpiar.addEventListener("click", () => {
     usuario.historial = [];
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    usuarios = usuarios.map(u => u.cuenta === usuario.cuenta ? usuario : u);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
     localStorage.setItem("usuarioActual", JSON.stringify(usuario));
     actualizarLista();
   });
@@ -171,8 +196,7 @@ function verHistorial() {
   actualizarLista();
 }
 
-function depositarDinero() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
+function depositarDinero(usuario) {
   const container = document.getElementById("accionesForm");
   container.innerHTML = `
     <h3>Depositar Dinero</h3>
@@ -192,23 +216,19 @@ function depositarDinero() {
     }
 
     usuario.saldo += monto;
-    actualizarSaldo(usuario);
     const movimiento = new Movimientos("Deposito", monto);
-    guardarTransaccion(movimiento);
+    usuario.historial.push(movimiento);
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    usuarios = usuarios.map(u => u.cuenta === usuario.cuenta ? usuario : u);
+
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    localStorage.setItem("usuarioActual", JSON.stringify(usuario));
+
+    document.getElementById("saldo").textContent = usuario.saldo;
     container.innerHTML = `<p>Depósito realizado exitosamente.</p>`;
-    verHistorial();
+    verHistorial(usuario);
   });
-}
-
-function actualizarSaldo(usuario) {
-  document.getElementById("saldo").textContent = usuario.saldo;
-  localStorage.setItem("usuarioActual", JSON.stringify(usuario));
-}
-
-function guardarTransaccion(movimiento) {
-  const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
-  usuario.historial.push(movimiento);
-  localStorage.setItem("usuarioActual", JSON.stringify(usuario));
 }
 
 function actualizarCotizacionDolar() {
