@@ -175,3 +175,40 @@ button:hover{
   min-width: 180px;
   text-align: center;
 }
+
+
+body.dark-mode {
+  background: #121212 !important; 
+  color: #f1f1f1; 
+}
+
+body.dark-mode .inicio-form,
+body.dark-mode .homebanking-acciones,
+body.dark-mode #accionesForm,
+body.dark-mode #historialContainer,
+body.dark-mode .cotizacion-card {
+  background-color: #1e1e1e;
+  color: #e1e1e1;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .inicio-form h2,
+body.dark-mode .homebanking-header,
+body.dark-mode .cotizacion-card {
+  color: #aad8ac;
+}
+
+body.dark-mode button {
+  background-color: #388e3c;
+}
+body.dark-mode button:hover {
+  background-color: #286c2b;
+}
+
+body.dark-mode .accionBtn {
+  background-color: #8e6938;
+}
+body.dark-mode .accionBtn:hover {
+  background-color: #8e4d38;
+}

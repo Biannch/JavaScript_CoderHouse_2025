@@ -20,9 +20,10 @@ export function mostrarHomeBanking(usuario){
           <button id="eliminarCuentaBtn" class="accionBtn">Eliminar cuenta</button>
         </div>
         <div class="datos-usuario">
-          <p><strong>Número de Cuenta:</strong> ${usuario.cuenta}</p>
-          <p><strong>Saldo disponible:</strong> $<span id="saldo">${usuario.saldo}</span></p>
+        <p><strong>Número de Cuenta:</strong> ${usuario.cuenta}</p>
+        <p><strong>Saldo disponible:</strong> $<span id="saldo">${usuario.saldo}</span></p>
         </div>
+        <button id="darkModeToggle" class="accionBtn">🌙 Modo Oscuro</button>        
       </div>
     </section>
 
@@ -55,6 +56,17 @@ export function mostrarHomeBanking(usuario){
   document.getElementById("btnTransferencia").addEventListener("click", () => realizarTransferencia());
   document.getElementById("btnHistorial").addEventListener("click", () => verHistorial());
   document.getElementById("btnDepositar").addEventListener("click", () => depositarDinero());
+
+  document.getElementById("darkModeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    const btn = document.getElementById("darkModeToggle");
+    if (document.body.classList.contains("dark-mode")) {
+      btn.textContent = "☀️ Modo Claro";
+    } else {
+      btn.textContent = "🌙 Modo Oscuro";
+    }
+  });
 }
 
 function realizarTransferencia() {
