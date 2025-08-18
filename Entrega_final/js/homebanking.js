@@ -101,15 +101,67 @@ function verHistorial() {
 
   container.innerHTML = `
     <h3>Historial de Transacciones</h3>
-    <ul>
-      ${usuario.historial.map(t => `
-        <li>
-          ${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}
-        </li>
-      `).join("")}
-    </ul>
+    <button id="btnLimpiarHistorial">Limpiar Historial</button>
+    <select id="filtroOperacion">
+      <option value="todas">Todas</option>
+      <option value="Deposito">Depósitos</option>
+      <option value="Transferencia">Transferencias</option>
+    </select>
+    <ul id="listaHistorial"></ul>
   `;
+
+  const listaHistorial = document.getElementById("listaHistorial");
+  const filtroOperacion = document.getElementById("filtroOperacion");
+  const btnLimpiar = document.getElementById("btnLimpiarHistorial");
+
+  function actualizarLista() {
+    let historialFiltrado = usuario.historial;
+    const tipo = filtroOperacion.value;
+    if (tipo !== "todas") {
+      listaHistorial.innerHTML = "";
+      historialFiltrado = historialFiltrado.filter(t => t.operacion === tipo);
+    }
+
+    listaHistorial.innerHTML = "";
+    historialFiltrado.forEach(t => {
+      const nuevoMovimiento = document.createElement('li');
+      nuevoMovimiento.textContent = `${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}`;
+      listaHistorial.appendChild(nuevoMovimiento);
+    });
+  }
+
+  filtroOperacion.addEventListener("change", actualizarLista);
+
+  btnLimpiar.addEventListener("click", () => {
+    usuario.historial = [];
+    localStorage.setItem("usuarioActual", JSON.stringify(usuario));
+    actualizarLista();
+  });
+
+  actualizarLista();
 }
+
+
+// function verHistorial() {
+//   const container = document.getElementById("historialContainer");
+//   const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
+
+//   if (!usuario || !usuario.historial || usuario.historial.length === 0) {
+//     container.innerHTML = `<p>No hay transacciones registradas.</p>`;
+//     return;
+//   }
+
+//   container.innerHTML = `
+//     <h3>Historial de Transacciones</h3>
+//     <ul>
+//       ${usuario.historial.map(t => `
+//         <li>
+//           ${t.fecha} - ${t.operacion} ${t.cuentaDestino ? `a cuenta ${t.cuentaDestino}` : ""}, monto $${t.monto}
+//         </li>
+//       `).join("")}
+//     </ul>
+//   `;
+// }
 
 function depositarDinero(usuario) {
   const container = document.getElementById("accionesForm");
